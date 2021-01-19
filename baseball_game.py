@@ -263,11 +263,16 @@ def main():
         # ===Modify codes below=============
         # 위의 코드를 포함하여 자유로운 수정이 가능함
         
-        user_input = input('Input guess number : ')
         
         while True:
+            user_input = input('Input guess number : ')
+            
+            if user_input == '0':
+                finish = True
+                break
+        
             if not is_validated_number(user_input):
-                user_input = input("Wrong Input, Input again\nInput guess number : ")
+                print("Wrong Input, Input again")
                 continue
 
             result = get_strikes_or_ball(user_input, random_number)            
@@ -275,11 +280,8 @@ def main():
             
             if result[0] == 3:
                 break
-            else:
-                user_input = input('Input guess number : ')
-                
          
-        while True:   
+        while not finish and True:   
             one_more_input = input("You win, one more(Y/N)?") 
             no = is_no(one_more_input)
             yes = is_yes(one_more_input)

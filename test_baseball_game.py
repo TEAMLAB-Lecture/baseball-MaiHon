@@ -243,6 +243,6 @@ if __name__ == "__main__":
     # test.test_is_duplicated_number()
     # test.test_is_validated_number()
     # test.test_get_strikes_or_ball()
-    test.test_main()
+
     
     unittest.main()
