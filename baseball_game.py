@@ -87,7 +87,7 @@ def is_duplicated_number(three_digit):
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당
 
-    result = len(set([num for num in three_digit])) == len(three_digit)
+    result = len(set([num for num in three_digit])) != len(three_digit)
     # ==================================
     return result
 
@@ -117,7 +117,7 @@ def is_validated_number(user_input_number):
 
     result = is_digit(user_input_number) and \
              is_between_100_and_999(user_input_number) and \
-             is_duplicated_number(user_input_number)
+             not is_duplicated_number(user_input_number)
     # ==================================
     return result
 
@@ -178,9 +178,11 @@ def get_strikes_or_ball(user_input_number, random_number):
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당
     result = [0, 0]
-    for u, r in zip(user_input_number, random_number):
-        if u == r: result[0] += 1
-        else: result[1] += 1
+    numbers = set(list(random_number))
+    for idx, digit in enumerate(user_input_number):
+        if random_number[idx] == digit: result[0] += 1
+        else:
+            if digit in numbers: result[1] += 1
         
     # ==================================
     return result
@@ -212,7 +214,8 @@ def is_yes(one_more_input):
     # '''
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당
-    result = one_more_input.lower()[0] == 'y'
+    one_more_input = one_more_input.lower()
+    result =  one_more_input == 'y' or one_more_input == 'yes'
     # ==================================
     return result
 
@@ -244,7 +247,8 @@ def is_no(one_more_input):
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당
 
-    result = one_more_input.lower()[0] == 'n'
+    one_more_input = one_more_input.lower()
+    result =  one_more_input == 'n' or one_more_input == 'no'
     # ==================================
     return result
 
@@ -259,12 +263,11 @@ def main():
         # ===Modify codes below=============
         # 위의 코드를 포함하여 자유로운 수정이 가능함
         
+        user_input = input('Input guess number : ')
         
         while True:
-            user_input = input('Input guess number : ')
-        
             if not is_validated_number(user_input):
-                print("Wrong Input, Input again")
+                user_input = input("Wrong Input, Input again\nInput guess number : ")
                 continue
 
             result = get_strikes_or_ball(user_input, random_number)            
@@ -272,6 +275,9 @@ def main():
             
             if result[0] == 3:
                 break
+            else:
+                user_input = input('Input guess number : ')
+                
          
         while True:   
             one_more_input = input("You win, one more(Y/N)?") 
